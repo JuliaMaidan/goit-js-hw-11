@@ -1,0 +1,106 @@
+body {
+    background-color: rgba(254, 242, 242, 0.781);
+}
+
+.search-form {
+    margin-top: 40px;
+    background-color: #DEDEDE;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 350px;
+    height: 40px;
+    border-radius: 40px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    transition: all 0.3s ease;
+}
+input {
+    position: absolute;
+    top: 10px;
+    left: 38px;
+    font-size: 14px;
+    background: none;
+    color: #5a6674;
+    width: 195px;
+    height: 20px;
+    border: none;
+    appearance: none;
+    outline: none;
+}
+
+.search_btn {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 12px;
+    background-color: transparent; 
+    border: 1px solid transparent;
+}
+
+.search_btn-svg {
+    fill: #d94242;
+}
+
+.search_btn-svg:hover {
+    transform: scale(1.15);
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-card {
+    width: 320px;
+    height: 290px;
+    background-color: #fadadade;
+    box-shadow: rgba(57, 25, 57, 0.366) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-radius: 3;
+    transition: all .2s ease-in-out;
+}
+
+.photo-card:hover, .photo-card:focus{
+    transform: scale(1.1);
+}
+
+.photo-card__img {
+    width: 320px;
+    height: 220px;
+}
+
+.info {
+    display: flex;
+    gap: 18px;
+    flex-basis: 100px;
+    width: calc((100% - 1 * 20px) / 3);
+}
+
+.info p {
+    color: rgba(66, 18, 18, 0.859);
+    margin-left: 5px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.load-more {
+    cursor: pointer;
+    font-size: 16px;
+    width: 130px;
+    height: 40px;
+    border: 1px solid transparent;
+    border-radius: 10;
+    margin: 20px auto;
+    background-color: #d94242;
+    color: #ffffff;
+}
+
+.load-more:hover, .load-more:focus {
+    border: 1px solid #d94242;
+    background-color: transparent;
+    color: #d94242;
+}
