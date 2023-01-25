@@ -11,6 +11,7 @@ const BASE_URL = 'https://pixabay.com/api/'
 const API_KEY = '33056563-cc044f40a294fc1629405232d'
 const parametres = 'image_type=photo&orientation=horizontal&safesearch=true'
 let pageCount = 1
+let name = null;
 
 loadMoreEl.style.display = 'none'
 formEl.addEventListener('submit', fetchPhotos)
@@ -18,13 +19,15 @@ formEl.addEventListener('submit', fetchPhotos)
 async function fetchPhotos(e) {
     e.preventDefault()
     pageCount = 1
+    name = inputEl.value.trim()
+
 
     try {
-        const response = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${inputEl.value}&${parametres}&page=${pageCount}&per_page=40`)
+        const response = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${name}&${parametres}&page=${pageCount}&per_page=40`)
         console.log(response.data)
         if (response.data.totalHits === 0) {
             throw new Error()
-        } else if(inputEl.value.trim().length === 0){
+        } else if(name.length === 0){
             Notiflix.Notify.info('oops');
         }
         else if (response.data.totalHits <= pageCount * 40) {
@@ -72,10 +75,10 @@ function createMarkup(arr) {
 
 async function onLoadMoreClick() {
     pageCount += 1
-    const response = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${inputEl.value}&${parametres}&page=${pageCount}&per_page=40`)
+    const response = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${name}&${parametres}&page=${pageCount}&per_page=40`)
     galleryEl.insertAdjacentHTML('beforeend',createMarkup(response.data.hits))
     if (response.data.totalHits <= pageCount * 40) {
-        inputEl.value = ''
+        name = ''
         loadMoreEl.style.display = 'none'
         Notiflix.Notify.failure('Sorry, there are no more images.')
     }
