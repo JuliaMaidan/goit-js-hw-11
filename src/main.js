@@ -27,10 +27,11 @@ async function fetchPhotos(e) {
             Notiflix.Notify.success(`Hooray! We found ${response.data.total} images.`);
             galleryEl.innerHTML = createMarkup(response.data.hits)
             loadMoreEl.style.display = 'block'
-            // inputEl.value = ''
         }
     } catch (error) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')
+        galleryEl.innerHTML = ''
+        loadMoreEl.style.display = 'none'
     }
 };
 
