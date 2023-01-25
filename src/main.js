@@ -33,11 +33,13 @@ async function fetchPhotos(e) {
         else if (response.data.totalHits <= pageCount * 40) {
             galleryEl.innerHTML = createMarkup(response.data.hits)
             loadMoreEl.style.display = 'none'
+            inputEl.value = ''
         }
         else {
             Notiflix.Notify.success(`Hooray! We found ${response.data.total} images.`);
             galleryEl.innerHTML = createMarkup(response.data.hits)
             loadMoreEl.style.display = 'block'
+            inputEl.value = ''
         }
     } catch (error) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')
@@ -78,7 +80,6 @@ async function onLoadMoreClick() {
     const response = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${name}&${parametres}&page=${pageCount}&per_page=40`)
     galleryEl.insertAdjacentHTML('beforeend',createMarkup(response.data.hits))
     if (response.data.totalHits <= pageCount * 40) {
-        name = ''
         loadMoreEl.style.display = 'none'
         Notiflix.Notify.failure('Sorry, there are no more images.')
     }
