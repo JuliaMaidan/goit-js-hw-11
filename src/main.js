@@ -17,13 +17,21 @@ formEl.addEventListener('submit', fetchPhotos)
 
 async function fetchPhotos(e) {
     e.preventDefault()
+    pageCount = 1
+
     try {
         const response = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${inputEl.value}&${parametres}&page=${pageCount}&per_page=40`)
+        console.log(response.data)
         if (response.data.totalHits === 0) {
             throw new Error()
-        } else if(inputEl.value.length === 0){
+        } else if(inputEl.value.trim().length === 0){
             Notiflix.Notify.info('oops');
-        } else {
+        }
+        else if (response.data.totalHits <= pageCount * 40) {
+            galleryEl.innerHTML = createMarkup(response.data.hits)
+            loadMoreEl.style.display = 'none'
+        }
+        else {
             Notiflix.Notify.success(`Hooray! We found ${response.data.total} images.`);
             galleryEl.innerHTML = createMarkup(response.data.hits)
             loadMoreEl.style.display = 'block'
@@ -61,13 +69,16 @@ function createMarkup(arr) {
     return galleryItemMarkup
 }
 
-loadMoreEl.addEventListener('click', async () => {
+
+async function onLoadMoreClick() {
     pageCount += 1
     const response = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${inputEl.value}&${parametres}&page=${pageCount}&per_page=40`)
     galleryEl.insertAdjacentHTML('beforeend',createMarkup(response.data.hits))
-    if (response.data.totalHits < pageCount * 40) {
+    if (response.data.totalHits <= pageCount * 40) {
         inputEl.value = ''
         loadMoreEl.style.display = 'none'
         Notiflix.Notify.failure('Sorry, there are no more images.')
-    } 
-})
+    }
+}
+
+loadMoreEl.addEventListener('click', onLoadMoreClick)
